@@ -41,7 +41,30 @@ int controlCalculation(int a, int b, const char* op)
     }
     return -1;
 }
-
+double controlCalculationf(double a, double b, const char* op)
+{
+    if (strcmp(op, "fadd") == 0)
+    {
+        return a+b;
+    }
+    
+    if (strcmp(op, "fdiv") == 0)
+    {
+        return a/b;
+    }
+    
+    if (strcmp(op, "fmul") == 0)
+    {
+        return a*b;
+    }
+    
+    if (strcmp(op, "fsub") == 0)
+    {
+        return a-b;
+    }
+    
+    return -1;
+}
 
 #include <calcLib.h>
 
