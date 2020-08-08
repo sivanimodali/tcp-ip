@@ -164,8 +164,6 @@ void test(int socket)
         
         if (i != 2)
         {
-        
-        //wait for confirmation
         for (;;)
         {
             read(socket, buff, sizeof(buff));
@@ -174,8 +172,6 @@ void test(int socket)
         }
         }
         printf("client sends : %s\n", buff);
-    
-        //wait for result
         if (i > 0)
         {
         
@@ -191,6 +187,90 @@ void test(int socket)
         ++i;
     }
 }
+int main(int argc, char *argv[] ) 
+{ 
+    
+    char* port;
+    char* ip;
+    const char delim[2] = ":";
+    int sockfd, connfd;
+    unsigned int len;
+    struct sockaddr_in servaddr, cli;
+    
+    //initialize CalcLib
+    initCalcLib();
+    
+    if( argc == 2 ) {
+        ip = strtok(argv[1], delim);
+        port = strtok(NULL, delim);
+    }
+    else if( argc > 2 ) {
+        printf("Too many arguments supplied.\n");
+        exit(0);
+    }
+    else {
+        printf("One argument expected.\n");
+        exit(0);
+    }
+    
+    
+  
+    // socket create and verification 
+    sockfd = socket(AF_INET, SOCK_STREAM, 0); 
+    if (sockfd == -1) { 
+        printf("socket creation failed...\n"); 
+        exit(0); 
+    } 
+
+    bzero(&servaddr, sizeof(servaddr)); 
+  
+    // assign IP, PORT 
+    servaddr.sin_family = AF_INET; 
+    servaddr.sin_addr.s_addr = inet_addr(ip); 
+    servaddr.sin_port = htons(atoi(port)); 
+    
+    //setting the socket for local address reuse
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int)) < 0)
+    error("setsockopt(SO_REUSEADDR) failed");
+    
+    
+    // Binding newly created socket to given IP and verification 
+    if ((bind(sockfd, (SA*)&servaddr, sizeof(servaddr))) != 0) { 
+        printf("socket bind failed...\n"); 
+        exit(0); 
+    } 
+    
+  
+    
+   if ((listen(sockfd, 5)) != 0) 
+         { 
+        printf("Listen failed...\n"); 
+        exit(0); 
+        } 
+        else
+        printf("Server listening..\n"); 
+        len = sizeof(cli); 
+  
+    
+    for (;;)
+    {
+         
+        connfd = accept(sockfd, (SA*)&cli, &len); 
+    if (connfd < 0) { 
+        printf("server acccept failed...\n"); 
+        exit(0); 
+    } 
+    
+    test(connfd);
+    }
+    
+  
+    
+    close(sockfd); 
+    
+    return 0; 
+
+} 
 
 
 #include <calcLib.h>
