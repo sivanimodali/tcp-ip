@@ -4,7 +4,6 @@
 #include <string.h> 
 #include <sys/socket.h>
 #include"client.h"
-#include <calcLib.h>
 #define SA struct sockaddr
 
 ssize_t read(int fs, void *buf, ssize_t N);
