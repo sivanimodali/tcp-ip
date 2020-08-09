@@ -197,7 +197,7 @@ int main(int argc, char *argv[] )
     unsigned int len;
     struct sockaddr_in servaddr, cli;
     
-    //initialize CalcLib
+    
     initCalcLib();
     
     if( argc == 2 ) {
@@ -215,7 +215,7 @@ int main(int argc, char *argv[] )
     
     
   
-    // socket create and verification 
+    
     sockfd = socket(AF_INET, SOCK_STREAM, 0); 
     if (sockfd == -1) { 
         printf("socket creation failed...\n"); 
@@ -224,17 +224,17 @@ int main(int argc, char *argv[] )
 
     bzero(&servaddr, sizeof(servaddr)); 
   
-    // assign IP, PORT 
+    
     servaddr.sin_family = AF_INET; 
     servaddr.sin_addr.s_addr = inet_addr(ip); 
     servaddr.sin_port = htons(atoi(port)); 
     
-    //setting the socket for local address reuse
+    
     if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int)) < 0)
     error("setsockopt(SO_REUSEADDR) failed");
     
     
-    // Binding newly created socket to given IP and verification 
+    
     if ((bind(sockfd, (SA*)&servaddr, sizeof(servaddr))) != 0) { 
         printf("socket bind failed...\n"); 
         exit(0); 
