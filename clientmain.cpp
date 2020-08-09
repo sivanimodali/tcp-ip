@@ -124,4 +124,81 @@ int main(int argc, char *argv[] )
     servaddr.sin_family = AF_INET; 
     servaddr.sin_addr.s_addr = inet_addr(ip); 
     servaddr.sin_port = htons(atoi(port)); 
+
+    if (connect(sockfd, (SA*)&servaddr, sizeof(servaddr)) != 0) { 
+        printf("connection with the server failed...\n"); 
+        exit(0); 
+    } 
+    else
+        printf("connected to the server..\n"); 
+  
+    char buff[64];
+    char temp[64];
+    bzero(buff, sizeof(buff));
+    bzero(temp, sizeof(temp));
+
+    int i = 0;
+    for(;;){
+        
+                for (;;)
+                {   
+                    
+                    if (read(sockfd, buff, sizeof(buff)) == -1)
+                        exit(0);
+                    
+                    
+                    if (strcmp(buff, temp) != 0)
+                        break;
+                    if (strcmp(buff, "Exit") != 0)
+                        exit(0);
+                    
+                   
+                }
+                        
+                     switch(i)
+                    {
+                        case 0:
+                            printf("server sends: %s\n", buff);
+                            sendConfirmation(sockfd);
+                            break;
+                        case 1:
+                            printf("server sends : %s\n", buff);
+                            sendConfirmation(sockfd);
+                            char* a; char* b; char* op;const char delim[2] = ",";
+                            
+                            a = strtok(buff, delim);
+                            b = strtok(NULL, delim);
+                            op = strtok(NULL, delim);
+                            
+                            if (op[0] == 'f')
+                                sendFloatingResult(calculateFloatingResult(atof(a), atof(b), op), sockfd);
+                            else
+                                sendIntegerResult(calculateIntegerResult(atoi(a), atoi(b), op), sockfd);
+                            
+                            
+                            
+                            break;
+                        default:
+                            break;
+                        
+                    }   
+                
+                
+                bzero(buff, sizeof(buff));
+                ++i;
+       
+    }
+    
+    
+    close(sockfd);
+    
+    
+    
+    return 0;   
 }
+  
+  
+  
+  
+
+
