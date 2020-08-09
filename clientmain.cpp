@@ -37,7 +37,29 @@ void sendFloatingResult(double result, int socket)
 }
 
   
-  
+ int calculateIntegerResult(int a, int b, const char* op)
+{
+    if (strcmp(op, "add") == 0)
+    {
+        return a+b;
+    }
+    
+    if (strcmp(op, "div") == 0)
+    {
+        return a/b;
+    }
+    
+    if (strcmp(op, "mul") == 0)
+    {
+        return a*b;
+    }
+    
+    if (strcmp(op, "sub") == 0)
+    {
+        return a-b;
+    }
+    return -1;
+} 
   
 
 }
