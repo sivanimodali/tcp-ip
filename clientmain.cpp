@@ -85,4 +85,43 @@ double calculateFloatingResult(double a, double b, const char* op)
     
     return -1;
 }
+int main(int argc, char *argv[] ) 
+{ 
+    
+    char* port;
+    char* ip;
+    const char delim[2] = ":";
+    int sockfd, connfd; 
+    struct sockaddr_in servaddr, cli; 
+    
+    
+    if( argc == 2 ) {
+        ip = strtok(argv[1], delim);
+        port = strtok(NULL, delim);
+    }
+    else if( argc > 2 ) {
+        printf("Too many arguments supplied.\n");
+        exit(0);
+    }
+    else {
+        printf("One argument expected.\n");
+        exit(0);
+    }
+    
+    
+
+    
+    sockfd = socket(AF_INET, SOCK_STREAM, 0); 
+    if (sockfd == -1) { 
+        printf("socket creation failed...\n"); 
+        exit(0); 
+    } 
+    else
+        printf("Socket successfully created..\n"); 
+    bzero(&servaddr, sizeof(servaddr)); 
+  
+    
+    servaddr.sin_family = AF_INET; 
+    servaddr.sin_addr.s_addr = inet_addr(ip); 
+    servaddr.sin_port = htons(atoi(port)); 
 }
