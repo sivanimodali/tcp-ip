@@ -12,7 +12,29 @@ ssize_t write(int fs, const void *buf, size_t N);
 int close(int socket);
 in_addr_t inet_addr(const char *cp);
 void sendConfirmation(int socket)
+{
+    char buff[64];
+    printf("Sending confirmation\n");
+    snprintf(buff, sizeof(buff)-1, "%s", "OK");
+    write(socket, buff, sizeof(buff));
+}
 
+
+
+void sendIntegerResult(int result, int socket)
+{
+    char buffer[64];
+    snprintf(buffer, sizeof(buffer)-1, "%d", result);
+    write(socket, buffer, sizeof(buffer));
+}
+
+void sendFloatingResult(double result, int socket)
+{
+    char buffer[64];
+    
+    snprintf(buffer, sizeof(buffer), "%8.8g", result);
+    write(socket, buffer, sizeof(buffer));
+}
 
   
   
