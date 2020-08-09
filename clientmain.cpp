@@ -61,5 +61,28 @@ void sendFloatingResult(double result, int socket)
     return -1;
 } 
   
-
+double calculateFloatingResult(double a, double b, const char* op)
+{
+    if (strcmp(op, "fadd") == 0)
+    {
+        return a+b;
+    }
+    
+    if (strcmp(op, "fdiv") == 0)
+    {
+        return a/b;
+    }
+    
+    if (strcmp(op, "fmul") == 0)
+    {
+        return a*b;
+    }
+    
+    if (strcmp(op, "fsub") == 0)
+    {
+        return a-b;
+    }
+    
+    return -1;
+}
 }
