@@ -5,7 +5,10 @@
 #include <string.h> 
 #include <sys/socket.h> 
 #include <sys/types.h> 
+#include <unistd.h>
+#include<arpa/inet.h>
 #include <math.h>
+#include<cmath>
 #include"server.h"
 
 
@@ -16,6 +19,7 @@ ssize_t write(int fs, const void *buf, size_t N);
 int close(int socket);
 void error (const char* s);
 in_addr_t inet_addr(const char *cp);
+int b=1;
 
 
 int controlCalculation(int a, int b, const char* op)
@@ -87,6 +91,11 @@ void sendFloatingData(double a, double b, const char* op, int socket)
     
     snprintf(buffer, sizeof(buffer), "%8.8g,%8.8g,%s", a, b, op);
     write(socket, buffer, sizeof(buffer));
+}
+
+void error (const char* s)
+{
+    printf("%s",s);
 }
 
 
@@ -230,7 +239,7 @@ int main(int argc, char *argv[] )
     servaddr.sin_port = htons(atoi(port)); 
     
     
-    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int)) < 0)
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &b, sizeof(int)) < 0)
     error("setsockopt(SO_REUSEADDR) failed");
     
     
