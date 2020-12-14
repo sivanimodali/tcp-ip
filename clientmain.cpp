@@ -3,11 +3,13 @@
 #include <stdlib.h> 
 #include <string.h> 
 #include <sys/socket.h>
-#include"client.h"
+#include <inttypes.h>
+#include <netinet/in.h>
+#include "client.h"
 #define SA struct sockaddr
 
 ssize_t read(int fs, void *buf, ssize_t N);
-ssize_t write(int fs, const void *buf, size_t N);
+ssize_t write(int fs, const void *buf, size_t N); //declared
 int close(int socket);
 in_addr_t inet_addr(const char *cp);
 void sendConfirmation(int socket)
@@ -15,9 +17,8 @@ void sendConfirmation(int socket)
     char buff[64];
     printf("Sending confirmation\n");
     snprintf(buff, sizeof(buff)-1, "%s", "OK");
-    write(socket, buff, sizeof(buff));
+    write(socket, buff, sizeof(buff)); //use
 }
-
 
 
 void sendIntegerResult(int result, int socket)
@@ -156,11 +157,12 @@ int main(int argc, char *argv[] )
                         
                      switch(i)
                     {
-                        case 0:
+                        case 0: {
                             printf("server sends: %s\n", buff);
                             sendConfirmation(sockfd);
                             break;
-                        case 1:
+                        }
+                        case 1:{
                             printf("server sends : %s\n", buff);
                             sendConfirmation(sockfd);
                             char* a; char* b; char* op;const char delim[2] = ",";
@@ -177,8 +179,10 @@ int main(int argc, char *argv[] )
                             
                             
                             break;
-                        default:
+                        }
+                        default:{
                             break;
+                        }
                         
                     }   
                 
