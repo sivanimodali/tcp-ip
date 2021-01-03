@@ -1,4 +1,4 @@
-#include <stdio.h>
+-#include <stdio.h>
 #include <stdlib.h>
 #include <netinet/in.h> 
 #include <stdlib.h> 
@@ -59,7 +59,7 @@ double controlCalculationf(double a, double b, const char* op)
     
     if (strcmp(op, "fmul") == 0)
     {
-        return a*b;
+ +       return a*b;
     }
     
     if (strcmp(op, "fsub") == 0)
